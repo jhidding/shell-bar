@@ -59,7 +59,8 @@
 
        (for-each (lambda (b)
                    (format #t "~a~a~a"
-                           (t:move-left (+ 2 (string-length b)))
+                           ;; leniency for a single wide character
+                           (t:move-left (+ 3 (string-length b)))
                            (sb-box b)
                            (t:move-left (+ 3 (string-length b)))))
                  args))
