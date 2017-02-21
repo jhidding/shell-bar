@@ -1,0 +1,76 @@
+#!/usr/bin/guile
+!#
+
+;;; coding: utf-8
+
+(import (rnrs base (6))
+
+        (ice-9 unicode)
+        (ice-9 format)
+
+        (rename (srfi :26 cut) (cut $))
+        (terminal)
+
+        (shell-bar lib)
+        (shell-bar colour))
+
+(setlocale LC_ALL "")
+(setup-term)
+
+(define (float-to-u8 r g b)
+  (values
+    (exact (round (* 255 r)))
+    (exact (round (* 255 g)))
+    (exact (round (* 255 b)))))
+
+(define t:fg-colour
+  (compose t:fg-rgb float-to-u8 colour-rgb))
+
+(define (sh:guard s)
+  (format #f "\\[~a\\]" s))
+
+(define (t:fg-hsv h s v)
+  (t:fg-colour (make-colour 'hsv h s v)))
+
+(define (t:box content c1)
+  (format #f "~a(~a~a)" c1 content c1))
+
+(define sh:end
+  (format #f "\\[~a\\]" t:reset-colour))
+
+(define (sh:interp s c1 c2)
+  (string-append c1
+        (string-join (string-split s #\:)
+                     (format #f "~a:~a" c2 c1)
+                     'infix)))
+
+(define (main what hue . args)
+  (let* ((bar-colour   (t:fg-hsv hue 0.5 0.5))
+         (paren-colour (t:fg-hsv (+ 0.1 hue) 0.5 0.7))
+         (box-colour   (t:fg-hsv (- hue 0.1) 0.3 0.8))
+         (ip-colour    (t:fg-hsv (- hue 0.1) 0.7 0.5))
+         (sb-box       (lambda (s)
+                         (t:box (sh:interp s box-colour paren-colour) paren-colour))))
+    (case what
+      ((bar)
+       (format #t "~a╭~a~a"
+               bar-colour (make-string (- (t:width) 1) #\─)
+               t:reset-colour)
+
+       (for-each (lambda (b)
+                   (format #t "~a~a~a"
+                           (t:move-left (+ 2 (string-length b)))
+                           (sb-box b)
+                           (t:move-left (+ 3 (string-length b)))))
+                 args))
+
+      ((prompt)
+       (format #t "\r~a~a~a~a~%~a╰─~a\\w\\$~a "
+               (t:move-right 2) (sb-box "\\#") (t:move-right 1) (sb-box "\\u@\\h")
+               (sh:guard bar-colour) (sh:guard box-colour) sh:end)))))
+
+(let* ((what     (string->symbol ( cadr (command-line))))
+       (hue      (string->number (caddr (command-line))))
+       (args                     (cdddr (command-line))))
+  (apply main what hue args))
+
