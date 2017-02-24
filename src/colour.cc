@@ -43,7 +43,7 @@ std::array<double,3> ShellBar::rgb_to_hsv(double r, double g, double b)
         v = b;
     }
 
-    return std::make_array(h, s, v);
+    return { h, s, v };
 }
 
 
@@ -67,6 +67,6 @@ std::array<double,3> ShellBar::hsv_to_rgb(double h, double s, double v)
         case 5: r = v; g = l; b = m; break;
     }
 
-    return std::make_array(r, g, b);
+    return { r, g, b };
 }
 

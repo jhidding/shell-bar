@@ -18,7 +18,7 @@ namespace ShellBar
      * 1/6 is yellow, 1/3 green, 1/2 cyan, 2/3 blue, and 5/6 magenta.
      *
      * The saturation is the fraction max(r,g,b)/min(r,g,b), and the value
-     * simply equals max(r,g,b). 
+     * simply equals max(r,g,b).
      */
     class Colour
     {
@@ -30,7 +30,7 @@ namespace ShellBar
              */
             static Colour HSV(double h, double s, double v) {
                 Colour c;
-                c.hsv_ = std::make_array(h, s, v);
+                c.hsv_ = std::array<double,3>({ h, s, v });
                 return c;
             }
 
@@ -38,7 +38,7 @@ namespace ShellBar
              */
             static Colour RGB(double r, double g, double b) {
                 Colour c;
-                c.rgb_ = std::make_array(r, g, b);
+                c.rgb_ = std::array<double,3>({ r, g, b });
                 return c;
             }
 

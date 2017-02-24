@@ -10,7 +10,7 @@ each terminal window.
 Build
 -----
 
-Shell-bar compiles with GCC 6. Just type `make`.
+Shell-bar compiles with GCC 5 and 6. Just type `make`.
 
 Install
 -------

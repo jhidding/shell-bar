@@ -1,14 +1,14 @@
 #pragma once
 #include <sstream>
 #include <array>
-#include <experimental/array>
+// #include <experimental/array>
 #include <experimental/tuple>
 #include <experimental/optional>
 #include <cmath>
 
 // I know this is very naughty
 namespace std {
-    using std::experimental::make_array;
+    // using std::experimental::make_array;
     using std::experimental::apply;
     using std::experimental::optional;
     using std::experimental::nullopt;
