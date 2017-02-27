@@ -18,7 +18,7 @@ void usage(std::string const &exec_name)
         << "Shell-bar " << VERSION << " © 2017 Johannes Hidding\n"
         << "Licensed under Apache v2, see README.md\n\n"
         << "usage:\n"
-        << "    " << exec_name << " bar | prompt <hue> [args]\n\n"
+        << "    " << exec_name << " [-oldterm] bar | prompt <hue> [args]\n\n"
         << "Additional arguments will only be read in case of a bar call.\n";
 }
 
@@ -31,6 +31,11 @@ std::string const print_colour(Colour const &c)
         static_cast<int>(c.rgb()[0]*255),
         static_cast<int>(c.rgb()[1]*255),
         static_cast<int>(c.rgb()[2]*255));
+}
+
+std::string const print_colour_oldterm(Colour const &c)
+{
+    return Term::setaf_rgb(c.rgb()[0], c.rgb()[1], c.rgb()[2]);
 }
 
 /* Return a string with colours added, and wrapped in paretheses. If the string
@@ -86,7 +91,20 @@ int main(int argc, char **argv)
         return EXIT_FAILURE;
     }
 
-    auto hue = string_to<double>(argv[2]);
+    std::function<std::string (Colour const &)> set_colour = print_colour;
+
+    int argp = 1;
+    while (argv[argp] != std::string("bar")
+            && argv[argp] != std::string("prompt"))
+    {
+        if (argv[argp] == std::string("-oldterm"))
+        {
+            set_colour = print_colour_oldterm;
+        }
+        ++argp;
+    }
+
+    auto hue = string_to<double>(argv[argp + 1]);
     if (not hue) {
         std::cout
             << "Error: Could not read a hue value from \""
@@ -99,9 +117,9 @@ int main(int argc, char **argv)
     int columns = Term::columns();
 
     // create a palette based on the given hue value
-    auto bar_colour = print_colour(Colour::HSV(*hue, 0.5, 0.5)),
-         paren_colour = print_colour(Colour::HSV(*hue + 0.1, 0.5, 0.7)),
-         text_colour = print_colour(Colour::HSV(*hue - 0.1, 0.3, 0.8));
+    auto bar_colour = set_colour(Colour::HSV(*hue, 0.5, 0.5)),
+         paren_colour = set_colour(Colour::HSV(*hue + 0.1, 0.5, 0.7)),
+         text_colour = set_colour(Colour::HSV(*hue - 0.1, 0.3, 0.8));
 
     // short-hand
     auto pbox = [&] (std::string const &s) {
@@ -109,12 +127,12 @@ int main(int argc, char **argv)
     };
 
     // paint the top bar, this part is run every prompt
-    if (argv[1] == std::string("bar")) {
+    if (argv[argp] == std::string("bar")) {
         std::cout << bar_colour << "╭";
         for (int i = 0; i < columns - 1; ++i)
             std::cout << "─";
 
-        for (int i = 3; i < argc; ++i)
+        for (int i = argp+2; i < argc; ++i)
         {
             unsigned w = utf8_length(argv[i]);
             std::cout
@@ -127,7 +145,7 @@ int main(int argc, char **argv)
     }
 
     // paint the lower bit, this part is run only once in bashrc.
-    if (argv[1] == std::string("prompt")) {
+    if (argv[argp] == std::string("prompt")) {
         std::cout << bar_colour << "\r" << Term::move_right(2) << pbox("\\#")
             << Term::move_right(1) << pbox("\\u@\\h") << "\n"
             << guard_escapes(bar_colour) << "╰─"
