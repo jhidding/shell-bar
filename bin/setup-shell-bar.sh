@@ -34,7 +34,6 @@ PS1+=")\]"
 
 if [ "$1" == "-oldterm" ]
 then
-        echo "Using old terminal codes."
         PS1+="$(shell-bar -oldterm prompt ${PS_COLOR})"
 else
         PS1+="$(shell-bar prompt ${PS_COLOR})"
