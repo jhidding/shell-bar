@@ -17,7 +17,7 @@ do
                         PS1+=" \$?"
                         ;;
                 time)
-                        PS1+=" \$(date +%X)"
+                        PS1+=" \$(date +\"%X\")"
                         ;;
                 venv)
                         PS1+=" \$(python-venv-bar.sh)"
