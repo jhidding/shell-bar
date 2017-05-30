@@ -56,3 +56,12 @@ Example section in `.bashrc`
                 PS1+="-[\[\e[1;34m\]\w\[\e[m\]$ "
                 ;;
         esac
+
+Anaconda Users
+--------------
+For the correct display of anaconda virtual environments it is best to add to or create a `.condarc` file in your home directory.
+
+Add the following line:
+```
+changeps1: False
+```
