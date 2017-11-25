@@ -2,9 +2,11 @@
 #include <sstream>
 #include <array>
 // #include <experimental/array>
+#include <cmath>
+
+#if __GNUC__ < 6
 #include <experimental/tuple>
 #include <experimental/optional>
-#include <cmath>
 
 // I know this is very naughty
 namespace std {
@@ -13,6 +15,10 @@ namespace std {
     using std::experimental::optional;
     using std::experimental::nullopt;
 }
+#else
+#include <tuple>
+#include <optional>
+#endif
 
 /* Compute the integer modulo `x` following:
  *   a = k·b + x, k∈ ℤ

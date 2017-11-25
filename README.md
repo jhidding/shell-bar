@@ -5,36 +5,39 @@ Shell-bar is a small program that draws a pretty bar in your shell prompt.
 Currently this has only been tested with Bash. The bar gets a random colour for
 each terminal window. This has been tested to work on the following terminals:
 
-- gnome-terminal 3.22
-- konsole 16.12
-- xfce4-terminal 0.8.3
-- xterm 327
-- rxvt-unicode-256color 9.22 (with `-oldterm`)
-- terminology 0.9.1 (with `-oldterm`)
-- mate-terminal 1.12.1 (with `-oldterm`, true-colour support should be in v1.16)
+* gnome-terminal 3.22
+* konsole 16.12
+* xfce4-terminal 0.8.3
+* xterm 327
+* rxvt-unicode-256color 9.22 (with `-oldterm`)
+* terminology 0.9.1 (with `-oldterm`)
+* mate-terminal 1.12.1 (with `-oldterm`, true-colour support should be in v1.16)
 
 ![screenshot](screenshot.png)
 
 Build
 -----
 
-Shell-bar compiles with GCC 5 and 6. Just type `make`.
+Shell-bar compiles with GCC 5, 6, and 7. Just type `make`.
 
 Install
 -------
 
-Copy the files in `./bin` to `~/.local/bin`, or better yet, use
-[`xstow`](http://xstow.sourceforge.net) to get a similar effect. Make sure
-`~/.local/bin` is in your `$PATH`. To see an example of how to enable
-`shell-bar` in your `.bashrc`, see below.
+Edit the `Makefile` to set your install prefix. Then run
+
+```bash
+make install
+```
+
+To see an example of how to enable `shell-bar` in your `.bashrc`, see below.
 
 Additional info scripts
 -----------------------
 
 This distribution currently has two extra scripts:
 
-- git
-- Python VirtualEnv
+* git
+* Python VirtualEnv
 
 And a helper script to setup the shell-bar with the desired plugins. If you
 create additions of your own, share, pull-request!
@@ -59,7 +62,8 @@ Example section in `.bashrc`
 
 Anaconda Users
 --------------
-For the correct display of anaconda virtual environments it is best to add to or create a `.condarc` file in your home directory.
+For the correct display of anaconda virtual environments it is best to add to
+or create a `.condarc` file in your home directory.
 
 Add the following line:
 ```
