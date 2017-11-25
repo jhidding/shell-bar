@@ -45,20 +45,22 @@ create additions of your own, share, pull-request!
 Example section in `.bashrc`
 ----------------------------
 
-        case "$TERM" in
-        rxvt*)
-                export VIRTUAL_ENV_DISABLE_PROMPT=1
-                source setup-shell-bar.sh time return-value git
-                ;;
-        xterm*|x-term*)
-                export VIRTUAL_ENV_DISABLE_PROMPT=1
-                source setup-shell-bar.sh time return-value venv git
-                ;;
-        *)
-                PS1="[\[\e[1m\]\#\[\e[m\]]-[\[\e[32m\]\u@\h\[\e[m\]]"
-                PS1+="-[\[\e[1;34m\]\w\[\e[m\]$ "
-                ;;
-        esac
+```bash
+case "$TERM" in
+rxvt*)
+	export VIRTUAL_ENV_DISABLE_PROMPT=1
+	source setup-shell-bar.sh time return-value git
+	;;
+xterm*|x-term*)
+	export VIRTUAL_ENV_DISABLE_PROMPT=1
+	source setup-shell-bar.sh time return-value venv git
+	;;
+*)
+	PS1="[\[\e[1m\]\#\[\e[m\]]-[\[\e[32m\]\u@\h\[\e[m\]]"
+	PS1+="-[\[\e[1;34m\]\w\[\e[m\]$ "
+	;;
+esac
+```
 
 Anaconda Users
 --------------
