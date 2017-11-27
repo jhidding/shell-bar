@@ -1,4 +1,4 @@
-#include "colour.hh"
+ #include "colour.hh"
 
 using namespace ShellBar;
 
