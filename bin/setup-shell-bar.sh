@@ -22,6 +22,9 @@ do
                 venv)
                         PS1+=" \$(python-venv-bar.sh)"
                         ;;
+                chez)
+                        PS1+=" \$(chez-mate-bar.sh)"
+                        ;;
                 git)
                         PS1+=" \$(git-bar.sh)"
                         ;;

@@ -34,7 +34,7 @@ bin/shell-bar: src/*.cc
 
 install:
 	mkdir -p ${PREFIX}/bin
-	install -m 557 bin/shell-bar bin/*.sh ${PREFIX}/bin
+	install -m 755 bin/shell-bar bin/*.sh ${PREFIX}/bin
 
 clean:
 	rm -f bin/shell-bar
