@@ -28,6 +28,9 @@ do
                 git)
                         PS1+=" \$(git-bar.sh)"
                         ;;
+                open-foam)
+                        PS1+=" \$(open-foam-bar.sh)"
+                        ;;
                 *)
                         ;;
         esac
