@@ -7,14 +7,14 @@
 # ---------------------------------------------------------------------------
 # Set the prefix of the installation. To install shell-bar directly in your
 # ~/.local/bin, use the following:
-# 
+#
 #   PREFIX=${HOME}/.local
-# 
+#
 # I prefer installing packages in their own folder and make symlinks using
 # stow, then something like this:
 #
 #   PREFIX=${HOME}/.local/pkg/shell-bar
-# 
+#
 # is more appropriate.
 
 PREFIX=${HOME}/.local/pkg/shell-bar
@@ -32,7 +32,7 @@ CPP=g++
 bin/shell-bar: src/*.cc
 	${CPP} -std=c++17 src/*.cc -lcurses -Wall -o bin/shell-bar
 
-install:
+install: bin/shell-bar
 	mkdir -p ${PREFIX}/bin
 	install -m 755 bin/shell-bar bin/*.sh ${PREFIX}/bin
 
