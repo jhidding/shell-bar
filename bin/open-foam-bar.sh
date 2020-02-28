@@ -1,6 +1,6 @@
 function foam_info(){
-    if [[ -n "$FOAM_INST_DIR" ]]; then
-        echo "🧽"
+    if [[ -n "$FOAM_API" ]]; then
+        echo "🧽:${FOAM_API}"
     fi
 }
 
